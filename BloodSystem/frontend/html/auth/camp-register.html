@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camp Registration - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Header -->
+        <header class="auth-header">
+            <div class="logo">
+                <span class="blood-drop">🩸</span>
+                <span class="brand-name">RedConnect</span>
+            </div>
+            <a href="../index.html" class="back-link">← Back to Home</a>
+        </header>
+
+        <!-- Registration Form -->
+        <main class="auth-main">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h1 class="auth-title">Camp Registration</h1>
+                    <p class="auth-subtitle">Register your organization to organize blood donation camps</p>
+                </div>
+
+                <form id="campRegistrationForm" class="auth-form">
+                    <!-- Organization Details -->
+                    <div class="form-section">
+                        <h3 class="section-title">Organization Details</h3>
+                        
+                        <div class="form-group">
+                            <label for="organizationName" class="form-label">Organization Name *</label>
+                            <input type="text" id="organizationName" name="organizationName" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="organizationType" class="form-label">Organization Type *</label>
+                                <select id="organizationType" name="organizationType" class="form-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="HOSPITAL">Hospital</option>
+                                    <option value="NGO">NGO</option>
+                                    <option value="GOVERNMENT">Government</option>
+                                    <option value="CORPORATE">Corporate</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="registrationNumber" class="form-label">Registration Number *</label>
+                                <input type="text" id="registrationNumber" name="registrationNumber" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Person -->
+                    <div class="form-section">
+                        <h3 class="section-title">Contact Person</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactPersonName" class="form-label">Full Name *</label>
+                                <input type="text" id="contactPersonName" name="contactPersonName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPersonDesignation" class="form-label">Designation *</label>
+                                <input type="text" id="contactPersonDesignation" name="contactPersonDesignation" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactPersonMobile" class="form-label">Mobile Number *</label>
+                            <input type="tel" id="contactPersonMobile" name="contactPersonMobile" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Organization Address -->
+                    <div class="form-section">
+                        <h3 class="section-title">Organization Address</h3>
+                        
+                        <div class="form-group">
+                            <label for="addressLine" class="form-label">Address Line *</label>
+                            <textarea id="addressLine" name="addressLine" class="form-textarea" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" class="form-label">City *</label>
+                                <input type="text" id="city" name="city" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="form-label">State *</label>
+                                <input type="text" id="state" name="state" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode *</label>
+                            <input type="text" id="pincode" name="pincode" class="form-input" pattern="[0-9]{6}" required>
+                        </div>
+                    </div>
+
+                    <!-- Official Contacts -->
+                    <div class="form-section">
+                        <h3 class="section-title">Official Contacts</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Official Email *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Organization Phone *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document Uploads -->
+                    <div class="form-section">
+                        <h3 class="section-title">Document Uploads</h3>
+                        
+                        <div class="form-group">
+                            <label for="organizationCertificate" class="form-label">Organization Certificate *</label>
+                            <div class="file-upload">
+                                <input type="file" id="organizationCertificate" name="organizationCertificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <label for="organizationCertificate" class="file-upload-label">
+                                    📄 Choose Certificate File
+                                </label>
+                            </div>
+                            <small class="form-help">Upload registration certificate, NGO certificate, or incorporation certificate</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="authorizationLetter" class="form-label">Authorization Letter *</label>
+                            <div class="file-upload">
+                                <input type="file" id="authorizationLetter" name="authorizationLetter" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <label for="authorizationLetter" class="file-upload-label">
+                                    📄 Choose Authorization Letter
+                                </label>
+                            </div>
+                            <small class="form-help">Letter authorizing blood camp organization activities</small>
+                        </div>
+                    </div>
+
+                    <!-- Account Credentials -->
+                    <div class="form-section">
+                        <h3 class="section-title">Account Credentials</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password *</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                            <div class="password-requirements">
+                                <small>Password must contain:</small>
+                                <ul>
+                                    <li id="length">At least 8 characters</li>
+                                    <li id="uppercase">One uppercase letter</li>
+                                    <li id="lowercase">One lowercase letter</li>
+                                    <li id="number">One number</li>
+                                    <li id="special">One special character</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="verification" name="verification" required>
+                            <span class="checkmark"></span>
+                            I certify that all information is accurate and I have authority to register this organization
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="medicalCompliance" name="medicalCompliance" required>
+                            <span class="checkmark"></span>
+                            I understand that all blood camps must comply with medical safety standards and regulations
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                        <span class="btn-text">Register Organization</span>
+                        <span class="btn-loading hidden">Registering...</span>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html" class="link">Login here</a></p>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/camp-register.js"></script>
+</body>
+</html>

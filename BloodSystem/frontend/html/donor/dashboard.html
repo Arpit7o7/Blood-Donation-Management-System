@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="blood-drop">🩸</span>
+                    <span class="brand-name">RedConnect</span>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell" id="notificationBell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count hidden" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">D</span>
+                        </div>
+                        <div class="user-dropdown hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsLink">Settings</a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Welcome back, <span id="userName">Donor</span>!</h1>
+                    <p class="welcome-subtitle">Ready to save lives? Check out nearby camps and hospital alerts.</p>
+                </div>
+                <div class="donor-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalDonations">0</div>
+                        <div class="stat-label">Total Donations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="lastDonation">Never</div>
+                        <div class="stat-label">Last Donation</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="nextEligible">-</div>
+                        <div class="stat-label">Next Eligible</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card" id="findCampsBtn">
+                        <div class="action-icon">🏕️</div>
+                        <div class="action-title">Find Blood Camps</div>
+                        <div class="action-description">Discover nearby donation camps</div>
+                    </button>
+                    <button class="action-card" id="hospitalAlertsBtn">
+                        <div class="action-icon">🏥</div>
+                        <div class="action-title">Hospital Alerts</div>
+                        <div class="action-description">View emergency blood requests</div>
+                    </button>
+                    <button class="action-card" id="donationHistoryBtn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Donation History</div>
+                        <div class="action-description">Track your donation records</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Camp Suggestions -->
+            <section class="camp-suggestions">
+                <div class="section-header">
+                    <h2 class="section-title">Nearby Blood Camps</h2>
+                    <button class="view-all-btn" id="viewAllCampsBtn">View All</button>
+                </div>
+                <div class="camps-grid" id="campsGrid">
+                    <!-- Camp cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading nearby camps...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hospital Alerts -->
+            <section class="hospital-alerts">
+                <div class="section-header">
+                    <h2 class="section-title">Hospital Blood Alerts</h2>
+                    <button class="view-all-btn" id="viewAllAlertsBtn">View All</button>
+                </div>
+                <div class="alerts-grid" id="alertsGrid">
+                    <!-- Alert cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading hospital alerts...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Notifications -->
+            <section class="recent-notifications">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Notifications</h2>
+                    <button class="view-all-btn" id="viewAllNotificationsBtn">View All</button>
+                </div>
+                <div class="notifications-list" id="notificationsList">
+                    <!-- Notifications will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading notifications...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal hidden" id="campApplicationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Apply for Blood Camp</h3>
+                <button class="modal-close" id="closeCampModal" onclick="document.getElementById('campApplicationModal').classList.add('hidden')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="campApplicationForm">
+                    <div class="camp-details" id="campDetails">
+                        <!-- Camp details will be populated here -->
+                    </div>
+                    
+                    <div class="form-section">
+                        <h4>Medical Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age" class="form-label">Age *</label>
+                                <input type="number" id="age" name="age" class="form-input" min="18" max="65" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="weight" class="form-label">Weight (kg) *</label>
+                                <input type="number" id="weight" name="weight" class="form-input" min="50" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastDonationDate" class="form-label">Last Blood Donation Date</label>
+                            <input type="date" id="lastDonationDate" name="lastDonationDate" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Health Status *</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="healthStatus" value="good" required>
+                                    <span class="radio-mark"></span>
+                                    Good - No health issues
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="healthStatus" value="minor" required>
+                                    <span class="radio-mark"></span>
+                                    Minor issues - Please specify below
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="healthIssues" class="form-label">Health Issues (if any)</label>
+                            <textarea id="healthIssues" name="healthIssues" class="form-textarea" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="medications" class="form-label">Current Medications</label>
+                            <textarea id="medications" name="medications" class="form-textarea" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <span class="checkmark"></span>
+                                I consent to blood donation and confirm all information is accurate
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelApplication" onclick="document.getElementById('campApplicationModal').classList.add('hidden')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal hidden" id="profileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Update Profile</h3>
+                <button class="modal-close" id="closeProfileModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="profileUpdateForm">
+                    <div class="form-section">
+                        <h4>Personal Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileFirstName" class="form-label">First Name</label>
+                                <input type="text" id="profileFirstName" name="first_name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLastName" class="form-label">Last Name</label>
+                                <input type="text" id="profileLastName" name="last_name" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileEmail" class="form-label">Email</label>
+                                <input type="email" id="profileEmail" name="email" class="form-input" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePhone" class="form-label">Phone</label>
+                                <input type="tel" id="profilePhone" name="phone" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Donor Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileBloodGroup" class="form-label">Blood Group</label>
+                                <select id="profileBloodGroup" name="blood_group" class="form-select" required>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileWeight" class="form-label">Weight (kg)</label>
+                                <input type="number" id="profileWeight" name="weight" class="form-input" min="50" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileCity" class="form-label">City</label>
+                                <input type="text" id="profileCity" name="city" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileState" class="form-label">State</label>
+                                <input type="text" id="profileState" name="state" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileGender" class="form-label">Gender</label>
+                            <select id="profileGender" name="gender" class="form-select" required>
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelProfileUpdate">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-common.js"></script>
+    <script src="../../js/donor-dashboard.js"></script>
+</body>
+</html>

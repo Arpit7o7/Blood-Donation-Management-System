@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/hospital-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="blood-drop">🩸</span>
+                    <span class="brand-name">RedConnect</span>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell" id="notificationBell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count hidden" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">H</span>
+                        </div>
+                        <div class="user-dropdown hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsLink">Settings</a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Welcome, <span id="hospitalName">Hospital</span></h1>
+                    <p class="welcome-subtitle">Manage blood requests, stock, and donor applications efficiently.</p>
+                </div>
+                <div class="hospital-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeRequests">0</div>
+                        <div class="stat-label">Active Requests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalStock">0</div>
+                        <div class="stat-label">Total Stock Units</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingApplications">0</div>
+                        <div class="stat-label">Pending Applications</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card emergency-action" id="createEmergencyAlertBtn">
+                        <div class="action-icon">🚨</div>
+                        <div class="action-title">Emergency Alert</div>
+                        <div class="action-description">Create urgent blood request</div>
+                    </button>
+                    <button class="action-card" id="manageStockBtn">
+                        <div class="action-icon">📊</div>
+                        <div class="action-title">Manage Stock</div>
+                        <div class="action-description">Update blood inventory</div>
+                    </button>
+                    <button class="action-card" id="reviewApplicationsBtn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Review Applications</div>
+                        <div class="action-description">Approve donor applications</div>
+                    </button>
+                    <button class="action-card" id="hospitalNetworkBtn">
+                        <div class="action-icon">🏥</div>
+                        <div class="action-title">Hospital Network</div>
+                        <div class="action-description">Exchange blood with hospitals</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Blood Stock Overview -->
+            <section class="blood-stock-section">
+                <div class="section-header">
+                    <h2 class="section-title">Blood Stock Overview</h2>
+                    <button class="view-all-btn" id="manageAllStockBtn">Manage All</button>
+                </div>
+                <div class="stock-grid" id="stockGrid">
+                    <!-- Stock cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading blood stock...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient Blood Requests -->
+            <section class="patient-requests-section">
+                <div class="section-header">
+                    <h2 class="section-title">Patient Blood Requests</h2>
+                    <button class="view-all-btn" id="viewAllRequestsBtn">View All</button>
+                </div>
+                <div class="requests-grid" id="requestsGrid">
+                    <!-- Request cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading patient requests...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Donor Applications -->
+            <section class="donor-applications-section">
+                <div class="section-header">
+                    <h2 class="section-title">Donor Applications</h2>
+                    <button class="view-all-btn" id="viewAllApplicationsBtn">View All</button>
+                </div>
+                <div class="applications-grid" id="applicationsGrid">
+                    <!-- Application cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading donor applications...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Emergency Alert Modal -->
+    <div class="modal hidden" id="emergencyAlertModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Emergency Blood Alert</h3>
+                <button class="modal-close" id="closeEmergencyModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="emergencyAlertForm">
+                    <div class="form-section">
+                        <h4>Blood Requirement Details</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bloodGroup" class="form-label">Blood Group Required *</label>
+                                <select id="bloodGroup" name="bloodGroup" class="form-select" required>
+                                    <option value="">Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="unitsNeeded" class="form-label">Units Needed *</label>
+                                <input type="number" id="unitsNeeded" name="unitsNeeded" class="form-input" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="urgency" class="form-label">Urgency Level *</label>
+                                <select id="urgency" name="urgency" class="form-select" required>
+                                    <option value="">Select Urgency</option>
+                                    <option value="LOW">Low Priority</option>
+                                    <option value="EMERGENCY">Emergency</option>
+                                    <option value="DISASTER">Disaster Level</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="requiredBy" class="form-label">Required By *</label>
+                                <input type="datetime-local" id="requiredBy" name="requiredBy" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason" class="form-label">Reason for Request *</label>
+                            <textarea id="reason" name="reason" class="form-textarea" rows="3" required 
+                                placeholder="Describe the medical situation requiring blood..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location" class="form-label">Specific Location *</label>
+                            <input type="text" id="location" name="location" class="form-input" required
+                                placeholder="e.g., Emergency Room, ICU, Operating Theater">
+                        </div>
+                    </div>
+
+                    <div class="emergency-warning" id="emergencyWarning" style="display: none;">
+                        <div class="warning-icon">⚠️</div>
+                        <div class="warning-content">
+                            <h4>Emergency/Disaster Alert</h4>
+                            <p>This alert will be broadcast to all eligible donors in the region. Please ensure this is a genuine emergency.</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelEmergencyAlert">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Alert</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hospital Network Modal -->
+    <div class="modal hidden" id="hospitalNetworkModal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Hospital Network - Blood Exchange</h3>
+                <button class="modal-close" id="closeNetworkModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="network-container">
+                    <!-- Network Tabs -->
+                    <div class="network-tabs">
+                        <button class="tab-btn active" id="exchangeTab" data-tab="exchange">Request Blood</button>
+                        <button class="tab-btn" id="requestsTab" data-tab="requests">My Requests</button>
+                        <button class="tab-btn" id="incomingTab" data-tab="incoming">Incoming Requests</button>
+                    </div>
+                    
+                    <!-- Exchange Tab Content -->
+                    <div class="tab-content active" id="exchangeContent">
+                        <div class="exchange-section">
+                            <h4>Request Blood from Partner Hospitals</h4>
+                            <p class="section-description">Connect with other hospitals in your network to exchange blood units when needed.</p>
+                            
+                            <form id="networkRequestForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="networkBloodGroup" class="form-label">Blood Group Needed *</label>
+                                        <select id="networkBloodGroup" name="bloodGroup" class="form-select" required>
+                                            <option value="">Select Blood Group</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="networkUnits" class="form-label">Units Needed *</label>
+                                        <input type="number" id="networkUnits" name="units" class="form-input" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="networkUrgency" class="form-label">Urgency Level *</label>
+                                        <select id="networkUrgency" name="urgency" class="form-select" required>
+                                            <option value="">Select Urgency</option>
+                                            <option value="LOW">Low Priority</option>
+                                            <option value="EMERGENCY">Emergency</option>
+                                            <option value="DISASTER">Disaster Level</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="networkRequiredBy" class="form-label">Required By *</label>
+                                        <input type="datetime-local" id="networkRequiredBy" name="requiredBy" class="form-input" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="networkReason" class="form-label">Reason for Request *</label>
+                                    <textarea id="networkReason" name="reason" class="form-textarea" rows="3" required 
+                                        placeholder="Describe why you need this blood exchange..."></textarea>
+                                </div>
+                                
+                                <div class="available-hospitals" id="availableHospitals">
+                                    <h5>Available Partner Hospitals</h5>
+                                    <div class="hospitals-grid" id="hospitalsGrid">
+                                        <div class="loading-placeholder">Loading partner hospitals...</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="selected-hospital" id="selectedHospital" style="display: none;">
+                                    <h5>Selected Hospital</h5>
+                                    <div class="hospital-card selected" id="selectedHospitalCard">
+                                        <!-- Selected hospital details will be shown here -->
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-actions">
+                                    <button type="button" class="btn btn-outline" id="cancelNetworkRequest">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Send Request</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Requests Tab Content -->
+                    <div class="tab-content" id="requestsContent">
+                        <div class="requests-section">
+                            <h4>My Blood Exchange Requests</h4>
+                            <p class="section-description">Track your outgoing blood exchange requests to other hospitals.</p>
+                            
+                            <div class="requests-list" id="sentRequestsList">
+                                <div class="loading-placeholder">Loading sent requests...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Incoming Tab Content -->
+                    <div class="tab-content" id="incomingContent">
+                        <div class="incoming-section">
+                            <h4>Incoming Blood Exchange Requests</h4>
+                            <p class="section-description">Review and respond to blood exchange requests from other hospitals.</p>
+                            
+                            <div class="requests-list" id="receivedRequestsList">
+                                <div class="loading-placeholder">Loading incoming requests...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network Request Response Modal -->
+    <div class="modal hidden" id="networkResponseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Respond to Blood Exchange Request</h3>
+                <button class="modal-close" id="closeResponseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="request-details" id="responseRequestDetails">
+                    <!-- Request details will be loaded here -->
+                </div>
+                
+                <form id="networkResponseForm">
+                    <input type="hidden" id="responseRequestId" name="requestId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Decision *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="decision" value="APPROVED" required>
+                                <span class="radio-text">Approve Request</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="decision" value="REJECTED" required>
+                                <span class="radio-text">Reject Request</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="unitsApprovedGroup" style="display: none;">
+                        <label for="unitsApproved" class="form-label">Units to Provide *</label>
+                        <input type="number" id="unitsApproved" name="unitsApproved" class="form-input" min="1">
+                        <small class="form-help">You can provide fewer units than requested if needed.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="responseNotes" class="form-label">Response Notes</label>
+                        <textarea id="responseNotes" name="responseNotes" class="form-textarea" rows="3" 
+                            placeholder="Add any notes about your decision..."></textarea>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelResponse">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Response</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Blood Stock Management</h3>
+                <button class="modal-close" id="closeStockModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="stock-management-container">
+                    <div class="stock-overview">
+                        <h4>Current Stock Overview</h4>
+                        <div class="stock-summary-grid" id="stockSummaryGrid">
+                            <!-- Stock summary cards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="stock-update-section">
+                        <h4>Update Stock</h4>
+                        <form id="stockUpdateForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="stockBloodGroup" class="form-label">Blood Group *</label>
+                                    <select id="stockBloodGroup" name="bloodGroup" class="form-select" required>
+                                        <option value="">Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stockOperation" class="form-label">Operation *</label>
+                                    <select id="stockOperation" name="operation" class="form-select" required>
+                                        <option value="">Select Operation</option>
+                                        <option value="set">Set Total Units</option>
+                                        <option value="add">Add Units (Received)</option>
+                                        <option value="subtract">Remove Units (Used)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stockUnits" class="form-label">Units *</label>
+                                    <input type="number" id="stockUnits" name="units" class="form-input" min="0" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="stockNotes" class="form-label">Notes (Optional)</label>
+                                <textarea id="stockNotes" name="notes" class="form-textarea" rows="2" 
+                                    placeholder="e.g., Blood received from donor camp, Used for emergency surgery..."></textarea>
+                            </div>
+                            
+                            <div class="stock-preview" id="stockPreview" style="display: none;">
+                                <div class="preview-content">
+                                    <h5>Preview Changes</h5>
+                                    <div class="preview-details">
+                                        <span class="preview-label">Blood Group:</span>
+                                        <span class="preview-value" id="previewBloodGroup">-</span>
+                                    </div>
+                                    <div class="preview-details">
+                                        <span class="preview-label">Current Stock:</span>
+                                        <span class="preview-value" id="previewCurrentStock">-</span>
+                                    </div>
+                                    <div class="preview-details">
+                                        <span class="preview-label">Operation:</span>
+                                        <span class="preview-value" id="previewOperation">-</span>
+                                    </div>
+                                    <div class="preview-details">
+                                        <span class="preview-label">New Stock:</span>
+                                        <span class="preview-value" id="previewNewStock">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn-outline" id="cancelStockUpdate">Cancel</button>
+                                <button type="button" class="btn btn-secondary" id="previewStockUpdate">Preview</button>
+                                <button type="submit" class="btn btn-primary">Update Stock</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hospital Network Modal -->
+    <div class="modal hidden" id="hospitalNetworkModal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Hospital Network - Blood Exchange</h3>
+                <button class="modal-close" id="closeNetworkModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="network-container">
+                    <!-- Network Tabs -->
+                    <div class="network-tabs">
+                        <button class="tab-btn active" id="exchangeTab" data-tab="exchange">Request Blood</button>
+                        <button class="tab-btn" id="requestsTab" data-tab="requests">My Requests</button>
+                        <button class="tab-btn" id="incomingTab" data-tab="incoming">Incoming Requests</button>
+                    </div>
+                    
+                    <!-- Exchange Tab Content -->
+                    <div class="tab-content active" id="exchangeContent">
+                        <div class="exchange-section">
+                            <h4>Request Blood from Partner Hospitals</h4>
+                            <p class="section-description">Connect with other hospitals in your network to exchange blood units when needed.</p>
+                            
+                            <form id="networkRequestForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="networkBloodGroup" class="form-label">Blood Group Needed *</label>
+                                        <select id="networkBloodGroup" name="bloodGroup" class="form-select" required>
+                                            <option value="">Select Blood Group</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="networkUnits" class="form-label">Units Needed *</label>
+                                        <input type="number" id="networkUnits" name="units" class="form-input" min="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="networkUrgency" class="form-label">Urgency Level *</label>
+                                        <select id="networkUrgency" name="urgency" class="form-select" required>
+                                            <option value="">Select Urgency</option>
+                                            <option value="LOW">Low Priority</option>
+                                            <option value="EMERGENCY">Emergency</option>
+                                            <option value="DISASTER">Disaster Level</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="networkRequiredBy" class="form-label">Required By *</label>
+                                        <input type="datetime-local" id="networkRequiredBy" name="requiredBy" class="form-input" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="networkReason" class="form-label">Reason for Request *</label>
+                                    <textarea id="networkReason" name="reason" class="form-textarea" rows="3" required 
+                                        placeholder="Describe why you need this blood exchange..."></textarea>
+                                </div>
+                                
+                                <div class="available-hospitals" id="availableHospitals">
+                                    <h5>Available Partner Hospitals</h5>
+                                    <div class="hospitals-grid" id="hospitalsGrid">
+                                        <div class="loading-placeholder">Loading partner hospitals...</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="selected-hospital" id="selectedHospital" style="display: none;">
+                                    <h5>Selected Hospital</h5>
+                                    <div class="hospital-card selected" id="selectedHospitalCard">
+                                        <!-- Selected hospital details will be shown here -->
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-actions">
+                                    <button type="button" class="btn btn-outline" id="cancelNetworkRequest">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Send Request</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Requests Tab Content -->
+                    <div class="tab-content" id="requestsContent">
+                        <div class="requests-section">
+                            <h4>My Blood Exchange Requests</h4>
+                            <p class="section-description">Track your outgoing blood exchange requests to other hospitals.</p>
+                            
+                            <div class="requests-list" id="sentRequestsList">
+                                <div class="loading-placeholder">Loading sent requests...</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Incoming Tab Content -->
+                    <div class="tab-content" id="incomingContent">
+                        <div class="incoming-section">
+                            <h4>Incoming Blood Exchange Requests</h4>
+                            <p class="section-description">Review and respond to blood exchange requests from other hospitals.</p>
+                            
+                            <div class="requests-list" id="receivedRequestsList">
+                                <div class="loading-placeholder">Loading incoming requests...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Network Request Response Modal -->
+    <div class="modal hidden" id="networkResponseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Respond to Blood Exchange Request</h3>
+                <button class="modal-close" id="closeResponseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="request-details" id="responseRequestDetails">
+                    <!-- Request details will be loaded here -->
+                </div>
+                
+                <form id="networkResponseForm">
+                    <input type="hidden" id="responseRequestId" name="requestId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Decision *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="decision" value="APPROVED" required>
+                                <span class="radio-text">Approve Request</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="decision" value="REJECTED" required>
+                                <span class="radio-text">Reject Request</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="unitsApprovedGroup" style="display: none;">
+                        <label for="unitsApproved" class="form-label">Units to Provide *</label>
+                        <input type="number" id="unitsApproved" name="unitsApproved" class="form-input" min="1">
+                        <small class="form-help">You can provide fewer units than requested if needed.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="responseNotes" class="form-label">Response Notes</label>
+                        <textarea id="responseNotes" name="responseNotes" class="form-textarea" rows="3" 
+                            placeholder="Add any notes about your decision..."></textarea>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelResponse">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Response</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-common.js"></script>
+    <script src="../../js/hospital-dashboard.js"></script>
+</body>
+</html>

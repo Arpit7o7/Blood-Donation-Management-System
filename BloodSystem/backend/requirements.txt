@@ -1,0 +1,11 @@
+Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+PyJWT==2.8.0
+setuptools>=65.0.0
+wheel>=0.37.0
+# djangorestframework-simplejwt==5.3.0  # Alternative JWT package
+# Pillow>=10.0.0  # Uncomment when needed for image uploads
+python-decouple==3.8
+psycopg2-binary==2.9.9
+gunicorn==21.2.0

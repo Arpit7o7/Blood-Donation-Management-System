@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Header -->
+        <header class="auth-header">
+            <div class="logo">
+                <span class="blood-drop">🩸</span>
+                <span class="brand-name">RedConnect</span>
+            </div>
+            <a href="../index.html" class="back-link">← Back to Home</a>
+        </header>
+
+        <!-- Registration Form -->
+        <main class="auth-main">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h1 class="auth-title">Patient Registration</h1>
+                    <p class="auth-subtitle">Register to request blood and access emergency services</p>
+                </div>
+
+                <form id="patientRegistrationForm" class="auth-form">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">Personal Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1234567890" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender" class="form-label">Gender *</label>
+                                <select id="gender" name="gender" class="form-select" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="O">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">Location Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" class="form-label">City *</label>
+                                <input type="text" id="city" name="city" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="form-label">State *</label>
+                                <input type="text" id="state" name="state" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact -->
+                    <div class="form-section">
+                        <h3 class="section-title">Emergency Contact</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emergencyContact" class="form-label">Emergency Contact Number *</label>
+                                <input type="tel" id="emergencyContact" name="emergencyContact" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergencyContactName" class="form-label">Emergency Contact Name *</label>
+                                <input type="text" id="emergencyContactName" name="emergencyContactName" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emergencyContactRelation" class="form-label">Relationship *</label>
+                            <select id="emergencyContactRelation" name="emergencyContactRelation" class="form-select" required>
+                                <option value="">Select Relationship</option>
+                                <option value="SPOUSE">Spouse</option>
+                                <option value="PARENT">Parent</option>
+                                <option value="CHILD">Child</option>
+                                <option value="SIBLING">Sibling</option>
+                                <option value="RELATIVE">Relative</option>
+                                <option value="FRIEND">Friend</option>
+                                <option value="GUARDIAN">Guardian</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Medical Information -->
+                    <div class="form-section">
+                        <h3 class="section-title">Medical Information (Optional)</h3>
+                        
+                        <div class="form-group">
+                            <label for="medicalConditions" class="form-label">Known Medical Conditions</label>
+                            <textarea id="medicalConditions" name="medicalConditions" class="form-textarea" rows="3" 
+                                placeholder="List any chronic conditions, allergies, or ongoing treatments..."></textarea>
+                            <small class="form-help">This information helps hospitals provide better care during emergencies</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bloodGroup" class="form-label">Blood Group (if known)</label>
+                            <select id="bloodGroup" name="bloodGroup" class="form-select">
+                                <option value="">Select if known</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                            <small class="form-help">Blood group will be verified during medical procedures</small>
+                        </div>
+                    </div>
+
+                    <!-- Account Security -->
+                    <div class="form-section">
+                        <h3 class="section-title">Account Security</h3>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password *</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                            <div class="password-requirements">
+                                <small>Password must contain:</small>
+                                <ul>
+                                    <li id="length">At least 8 characters</li>
+                                    <li id="uppercase">One uppercase letter</li>
+                                    <li id="lowercase">One lowercase letter</li>
+                                    <li id="number">One number</li>
+                                    <li id="special">One special character</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Privacy and Consent -->
+                    <div class="form-section">
+                        <h3 class="section-title">Privacy and Consent</h3>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medicalDataConsent" name="medicalDataConsent" required>
+                                <span class="checkmark"></span>
+                                I consent to the secure storage and processing of my medical information for blood request purposes
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="emergencyContactConsent" name="emergencyContactConsent" required>
+                                <span class="checkmark"></span>
+                                I authorize RedConnect to contact my emergency contact in case of medical emergencies
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <span class="checkmark"></span>
+                                I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                        <span class="btn-text">Register as Patient</span>
+                        <span class="btn-loading hidden">Registering...</span>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html" class="link">Login here</a></p>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/patient-register.js"></script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+/* Patient Dashboard Specific Styles */
+
+.primary-action {
+    border-color: var(--primary-red) !important;
+    background: linear-gradient(135deg, var(--primary-red-light) 0%, var(--white) 100%);
+}
+
+.primary-action:hover {
+    border-color: var(--primary-red-hover) !important;
+    background: linear-gradient(135deg, var(--primary-red-light) 0%, var(--primary-red-light) 100%);
+    transform: translateY(-3px);
+}
+
+.primary-action .action-icon {
+    color: var(--primary-red);
+    font-size: var(--font-size-4xl);
+}
+
+.emergency-action {
+    border-color: #dc2626 !important;
+    background: linear-gradient(135deg, #fef2f2 0%, var(--white) 100%);
+}
+
+.emergency-action:hover {
+    border-color: #b91c1c !important;
+    background: linear-gradient(135deg, #fef2f2 0%, #fef2f2 100%);
+    transform: translateY(-3px);
+}
+
+.emergency-action .action-icon {
+    color: #dc2626;
+    animation: pulse 2s infinite;
+}
+
+/* Request Cards */
+.request-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    transition: transform 0.2s ease-in-out;
+}
+
+.request-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.request-card.emergency {
+    border-left: 4px solid var(--primary-red);
+    background: linear-gradient(135deg, var(--primary-red-light) 0%, var(--white) 100%);
+}
+
+.request-card.disaster {
+    border-left: 4px solid #7c2d12;
+    background: linear-gradient(135deg, #fef7ff 0%, var(--white) 100%);
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-4);
+}
+
+.request-info h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-1);
+}
+
+.request-info p {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.request-status {
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #fff7ed;
+    color: #ea580c;
+}
+
+.status-approved {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-rejected {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.status-fulfilled {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.status-cancelled {
+    background-color: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.request-details {
+    margin-bottom: var(--spacing-4);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.detail-label {
+    font-size: var(--font-size-xs);
+    color: var(--gray-500);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.detail-value {
+    font-size: var(--font-size-sm);
+    color: var(--gray-900);
+    font-weight: 600;
+}
+
+.blood-type-display {
+    font-size: var(--font-size-lg);
+    color: var(--primary-red);
+    font-weight: 700;
+}
+
+.request-actions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+.btn-small {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-md);
+}
+
+/* Hospital Cards */
+.hospital-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    transition: transform 0.2s ease-in-out;
+}
+
+.hospital-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hospital-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+}
+
+.hospital-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: var(--font-size-xl);
+    flex-shrink: 0;
+}
+
+.hospital-info h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-1);
+}
+
+.hospital-info p {
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.hospital-features {
+    margin-bottom: var(--spacing-4);
+}
+
+.feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.feature-tag {
+    padding: var(--spacing-1) var(--spacing-2);
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.feature-tag.blood-bank {
+    background-color: var(--primary-red-light);
+    color: var(--primary-red);
+}
+
+.hospital-contact {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--gray-600);
+}
+
+.contact-icon {
+    font-size: var(--font-size-base);
+}
+
+.hospital-actions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+/* Emergency Warning */
+.emergency-warning {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    margin: var(--spacing-4) 0;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+}
+
+.warning-icon {
+    font-size: var(--font-size-xl);
+    color: var(--primary-red);
+    flex-shrink: 0;
+}
+
+.warning-content h4 {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--primary-red);
+    margin-bottom: var(--spacing-1);
+}
+
+.warning-content p {
+    font-size: var(--font-size-sm);
+    color: var(--gray-700);
+    line-height: 1.5;
+}
+
+/* Form Enhancements */
+.form-help {
+    font-size: var(--font-size-xs);
+    color: var(--gray-500);
+    margin-top: var(--spacing-1);
+}
+
+#emergencyJustification {
+    border: 2px solid var(--gray-300);
+    transition: border-color 0.2s ease-in-out;
+}
+
+#emergencyJustification:focus {
+    border-color: var(--primary-red);
+}
+
+#emergencyJustification.error {
+    border-color: var(--primary-red);
+    background-color: var(--primary-red-light);
+}
+
+/* Admin Approval Notice */
+.admin-approval-notice {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fed7aa;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-3);
+    margin-top: var(--spacing-3);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.admin-approval-notice .icon {
+    font-size: var(--font-size-lg);
+    color: #d97706;
+}
+
+.admin-approval-notice .text {
+    font-size: var(--font-size-sm);
+    color: #92400e;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2);
+    }
+    
+    .request-header {
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+    
+    .request-actions {
+        flex-direction: column;
+    }
+    
+    .hospital-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hospital-actions {
+        flex-direction: column;
+    }
+    
+    .feature-list {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .patient-stats {
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+    
+    .action-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .requests-grid,
+    .hospitals-grid {
+        grid-template-columns: 1fr;
+    }
+}

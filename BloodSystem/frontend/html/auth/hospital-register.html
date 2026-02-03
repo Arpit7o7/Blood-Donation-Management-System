@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Registration - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Header -->
+        <header class="auth-header">
+            <div class="logo">
+                <span class="blood-drop">🩸</span>
+                <span class="brand-name">RedConnect</span>
+            </div>
+            <a href="../index.html" class="back-link">← Back to Home</a>
+        </header>
+
+        <!-- Registration Form -->
+        <main class="auth-main">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h1 class="auth-title">Hospital Registration</h1>
+                    <p class="auth-subtitle">Join our network of verified healthcare providers</p>
+                </div>
+
+                <form id="hospitalRegistrationForm" class="auth-form">
+                    <!-- Hospital Identity -->
+                    <div class="form-section">
+                        <h3 class="section-title">Hospital Identity</h3>
+                        
+                        <div class="form-group">
+                            <label for="hospitalName" class="form-label">Hospital Name *</label>
+                            <input type="text" id="hospitalName" name="hospitalName" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="registrationNumber" class="form-label">Registration/License Number *</label>
+                                <input type="text" id="registrationNumber" name="registrationNumber" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="issuingAuthority" class="form-label">Issuing Authority *</label>
+                                <input type="text" id="issuingAuthority" name="issuingAuthority" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yearOfRegistration" class="form-label">Year of Registration *</label>
+                            <input type="number" id="yearOfRegistration" name="yearOfRegistration" class="form-input" min="1900" max="2024" required>
+                        </div>
+                    </div>
+
+                    <!-- Official Contacts -->
+                    <div class="form-section">
+                        <h3 class="section-title">Official Contacts</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Official Email *</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Hospital Phone *</label>
+                                <input type="tel" id="phone" name="phone" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emergencyContact" class="form-label">Emergency Contact *</label>
+                            <input type="tel" id="emergencyContact" name="emergencyContact" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-section">
+                        <h3 class="section-title">Hospital Address</h3>
+                        
+                        <div class="form-group">
+                            <label for="addressLine" class="form-label">Address Line *</label>
+                            <textarea id="addressLine" name="addressLine" class="form-textarea" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="area" class="form-label">Area *</label>
+                                <input type="text" id="area" name="area" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" class="form-label">City *</label>
+                                <input type="text" id="city" name="city" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="district" class="form-label">District *</label>
+                                <input type="text" id="district" name="district" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="form-label">State *</label>
+                                <input type="text" id="state" name="state" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode *</label>
+                            <input type="text" id="pincode" name="pincode" class="form-input" pattern="[0-9]{6}" required>
+                        </div>
+                    </div>
+
+                    <!-- Authorized Person -->
+                    <div class="form-section">
+                        <h3 class="section-title">Authorized Person</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="authorizedPersonName" class="form-label">Full Name *</label>
+                                <input type="text" id="authorizedPersonName" name="authorizedPersonName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="authorizedPersonDesignation" class="form-label">Designation *</label>
+                                <input type="text" id="authorizedPersonDesignation" name="authorizedPersonDesignation" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="authorizedPersonMobile" class="form-label">Mobile *</label>
+                                <input type="tel" id="authorizedPersonMobile" name="authorizedPersonMobile" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="authorizedPersonEmail" class="form-label">Official Email *</label>
+                                <input type="email" id="authorizedPersonEmail" name="authorizedPersonEmail" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blood Bank Details -->
+                    <div class="form-section">
+                        <h3 class="section-title">Blood Bank Details</h3>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="hasBloodBank" name="hasBloodBank">
+                                <span class="checkmark"></span>
+                                Hospital has blood bank facility
+                            </label>
+                        </div>
+
+                        <div id="bloodBankDetails" class="hidden">
+                            <div class="form-group">
+                                <label for="bloodBankLicense" class="form-label">Blood Bank License Number *</label>
+                                <input type="text" id="bloodBankLicense" name="bloodBankLicense" class="form-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="storageCapacity" class="form-label">Storage Capacity (units) *</label>
+                                <input type="number" id="storageCapacity" name="storageCapacity" class="form-input" min="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document Uploads -->
+                    <div class="form-section">
+                        <h3 class="section-title">Document Uploads</h3>
+                        
+                        <div class="form-group">
+                            <label for="registrationCertificate" class="form-label">Hospital Registration Certificate (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="registrationCertificate" name="registrationCertificate" accept=".pdf,.jpg,.jpeg,.png">
+                                <label for="registrationCertificate" class="file-upload-label">
+                                    📄 Choose Certificate File
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="bloodBankLicenseDoc" style="display: none;">
+                            <label for="bloodBankLicenseDocument" class="form-label">Blood Bank License Document (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="bloodBankLicenseDocument" name="bloodBankLicenseDocument" accept=".pdf,.jpg,.jpeg,.png">
+                                <label for="bloodBankLicenseDocument" class="file-upload-label">
+                                    📄 Choose License File
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="authorizationLetter" class="form-label">Authorization Letter (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="authorizationLetter" name="authorizationLetter" accept=".pdf,.jpg,.jpeg,.png">
+                                <label for="authorizationLetter" class="file-upload-label">
+                                    📄 Choose Authorization Letter
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hospitalSeal" class="form-label">Hospital Seal (Optional)</label>
+                            <div class="file-upload">
+                                <input type="file" id="hospitalSeal" name="hospitalSeal" accept=".pdf,.jpg,.jpeg,.png">
+                                <label for="hospitalSeal" class="file-upload-label">
+                                    📄 Choose Seal File
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Credentials -->
+                    <div class="form-section">
+                        <h3 class="section-title">Account Credentials</h3>
+                        
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">Contact Person First Name *</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Contact Person Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password *</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                            <div class="password-requirements">
+                                <small>Password must contain:</small>
+                                <ul>
+                                    <li id="length">At least 8 characters</li>
+                                    <li id="uppercase">One uppercase letter</li>
+                                    <li id="lowercase">One lowercase letter</li>
+                                    <li id="number">One number</li>
+                                    <li id="special">One special character</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="verification" name="verification" required>
+                            <span class="checkmark"></span>
+                            I certify that all information provided is accurate and I have authority to register this hospital
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                        <span class="btn-text">Register Hospital</span>
+                        <span class="btn-loading hidden">Registering...</span>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html" class="link">Login here</a></p>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/hospital-register.js"></script>
+</body>
+</html>

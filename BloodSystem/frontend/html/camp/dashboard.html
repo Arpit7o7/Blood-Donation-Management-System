@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camp Dashboard - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="blood-drop">🩸</span>
+                    <span class="brand-name">RedConnect</span>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell" id="notificationBell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count hidden" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">C</span>
+                        </div>
+                        <div class="user-dropdown hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsLink">Settings</a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Welcome, <span id="organizationName">Organization</span></h1>
+                    <p class="welcome-subtitle">Organize blood camps and manage donor applications efficiently.</p>
+                </div>
+                <div class="camp-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCamps">0</div>
+                        <div class="stat-label">Total Camps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeCamps">0</div>
+                        <div class="stat-label">Active Camps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingApplications">0</div>
+                        <div class="stat-label">Pending Applications</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card primary-action" id="createCampBtn">
+                        <div class="action-icon">🏕️</div>
+                        <div class="action-title">Create New Camp</div>
+                        <div class="action-description">Organize a blood donation camp</div>
+                    </button>
+                    <button class="action-card" id="reviewApplicationsBtn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Review Applications</div>
+                        <div class="action-description">Approve donor applications</div>
+                    </button>
+                    <button class="action-card" id="markAttendanceBtn">
+                        <div class="action-icon">✅</div>
+                        <div class="action-title">Mark Attendance</div>
+                        <div class="action-description">Record donor attendance</div>
+                    </button>
+                    <button class="action-card" id="campReportsBtn">
+                        <div class="action-icon">📊</div>
+                        <div class="action-title">Camp Reports</div>
+                        <div class="action-description">View camp statistics</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Active Camps -->
+            <section class="active-camps-section">
+                <div class="section-header">
+                    <h2 class="section-title">Active Camps</h2>
+                    <button class="view-all-btn" id="viewAllCampsBtn">View All</button>
+                </div>
+                <div class="camps-grid" id="activeCampsGrid">
+                    <!-- Active camp cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading active camps...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Applications -->
+            <section class="recent-applications-section">
+                <div class="section-header">
+                    <h2 class="section-title">Recent Applications</h2>
+                    <button class="view-all-btn" id="viewAllApplicationsBtn">View All</button>
+                </div>
+                <div class="applications-grid" id="recentApplicationsGrid">
+                    <!-- Application cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading applications...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Create Camp Modal -->
+    <div class="modal hidden" id="createCampModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Blood Camp</h3>
+                <button class="modal-close" id="closeCampModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="createCampForm">
+                    <div class="form-section">
+                        <h4>Camp Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="campName" class="form-label">Camp Name *</label>
+                            <input type="text" id="campName" name="name" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="campDescription" class="form-label">Description</label>
+                            <textarea id="campDescription" name="description" class="form-textarea" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="campDate" class="form-label">Date *</label>
+                                <input type="date" id="campDate" name="date" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expectedDonors" class="form-label">Expected Donors</label>
+                                <input type="number" id="expectedDonors" name="expected_donors" class="form-input" min="10" value="50">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startTime" class="form-label">Start Time *</label>
+                                <input type="time" id="startTime" name="start_time" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="endTime" class="form-label">End Time *</label>
+                                <input type="time" id="endTime" name="end_time" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Location Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="location" class="form-label">Location Name *</label>
+                            <input type="text" id="location" name="location" class="form-input" required
+                                placeholder="e.g., Community Center, School Hall">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="form-label">Full Address *</label>
+                            <textarea id="address" name="address" class="form-textarea" rows="2" required></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" class="form-label">City *</label>
+                                <input type="text" id="city" name="city" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state" class="form-label">State *</label>
+                                <input type="text" id="state" name="state" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode *</label>
+                            <input type="text" id="pincode" name="pincode" class="form-input" required pattern="[0-9]{6}">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Blood Groups Needed</h4>
+                        <div class="blood-groups-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="A+">
+                                <span class="checkmark"></span>
+                                A+
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="A-">
+                                <span class="checkmark"></span>
+                                A-
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="B+">
+                                <span class="checkmark"></span>
+                                B+
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="B-">
+                                <span class="checkmark"></span>
+                                B-
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="O+">
+                                <span class="checkmark"></span>
+                                O+
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="O-">
+                                <span class="checkmark"></span>
+                                O-
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="AB+">
+                                <span class="checkmark"></span>
+                                AB+
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="blood_groups" value="AB-">
+                                <span class="checkmark"></span>
+                                AB-
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        
+                        <div class="form-group">
+                            <label for="contactPerson" class="form-label">Contact Person *</label>
+                            <input type="text" id="contactPerson" name="contact_person" class="form-input" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactPhone" class="form-label">Contact Phone *</label>
+                                <input type="tel" id="contactPhone" name="contact_phone" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label">Contact Email *</label>
+                                <input type="email" id="contactEmail" name="contact_email" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelCampCreation">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Camp</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Review Modal -->
+    <div class="modal hidden" id="applicationReviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Review Donor Application</h3>
+                <button class="modal-close" id="closeReviewModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="applicationDetails">
+                    <!-- Application details will be populated here -->
+                </div>
+                
+                <div class="form-section">
+                    <h4>Review Decision</h4>
+                    <div class="form-group">
+                        <label for="reviewNotes" class="form-label">Notes (optional)</label>
+                        <textarea id="reviewNotes" name="notes" class="form-textarea" rows="3"
+                            placeholder="Add any notes about your decision..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancelReview">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="rejectApplication">Reject</button>
+                    <button type="button" class="btn btn-primary" id="approveApplication">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-common.js"></script>
+    <script src="../../js/camp-dashboard.js"></script>
+</body>
+</html>

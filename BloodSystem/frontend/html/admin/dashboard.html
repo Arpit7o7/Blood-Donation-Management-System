@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="blood-drop">🩸</span>
+                    <span class="brand-name">RedConnect Admin</span>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell" id="notificationBell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count hidden" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">A</span>
+                        </div>
+                        <div class="user-dropdown hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsLink">Settings</a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Admin Dashboard</h1>
+                    <p class="welcome-subtitle">Monitor and manage the RedConnect blood donation system.</p>
+                </div>
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingVerifications">0</div>
+                        <div class="stat-label">Pending Verifications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="emergencyRequests">0</div>
+                        <div class="stat-label">Emergency Requests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalDonations">0</div>
+                        <div class="stat-label">Total Donations</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card emergency-action" id="reviewEmergencyBtn">
+                        <div class="action-icon">🚨</div>
+                        <div class="action-title">Emergency Requests</div>
+                        <div class="action-description">Review emergency blood requests</div>
+                    </button>
+                    <button class="action-card" id="verifyOrganizationsBtn">
+                        <div class="action-icon">✅</div>
+                        <div class="action-title">Verify Organizations</div>
+                        <div class="action-description">Approve hospitals and camps</div>
+                    </button>
+                    <button class="action-card" id="systemStatsBtn">
+                        <div class="action-icon">📊</div>
+                        <div class="action-title">System Statistics</div>
+                        <div class="action-description">View detailed analytics</div>
+                    </button>
+                    <button class="action-card" id="auditLogsBtn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Audit Logs</div>
+                        <div class="action-description">Monitor system activity</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Pending Verifications -->
+            <section class="pending-verifications-section">
+                <div class="section-header">
+                    <h2 class="section-title">Pending Verifications</h2>
+                    <button class="view-all-btn" id="viewAllVerificationsBtn">View All</button>
+                </div>
+                <div class="verifications-grid" id="verificationsGrid">
+                    <!-- Verification cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading pending verifications...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Emergency Requests -->
+            <section class="emergency-requests-section">
+                <div class="section-header">
+                    <h2 class="section-title">Emergency Blood Requests</h2>
+                    <button class="view-all-btn" id="viewAllEmergencyBtn">View All</button>
+                </div>
+                <div class="emergency-grid" id="emergencyGrid">
+                    <!-- Emergency request cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading emergency requests...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Overview -->
+            <section class="system-overview-section">
+                <div class="section-header">
+                    <h2 class="section-title">System Overview</h2>
+                </div>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>User Distribution</h3>
+                        <div class="user-stats" id="userDistribution">
+                            <div class="user-stat">
+                                <span class="stat-label">Donors:</span>
+                                <span class="stat-value" id="donorCount">0</span>
+                            </div>
+                            <div class="user-stat">
+                                <span class="stat-label">Hospitals:</span>
+                                <span class="stat-value" id="hospitalCount">0</span>
+                            </div>
+                            <div class="user-stat">
+                                <span class="stat-label">Camps:</span>
+                                <span class="stat-value" id="campCount">0</span>
+                            </div>
+                            <div class="user-stat">
+                                <span class="stat-label">Patients:</span>
+                                <span class="stat-value" id="patientCount">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Blood Stock Status</h3>
+                        <div class="blood-stock-overview" id="bloodStockOverview">
+                            <!-- Blood stock data will be loaded here -->
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-feed" id="activityFeed">
+                            <!-- Recent activity will be loaded here -->
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Verification Review Modal -->
+    <div class="modal hidden" id="verificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Review Organization</h3>
+                <button class="modal-close" id="closeVerificationModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="organizationDetails">
+                    <!-- Organization details will be populated here -->
+                </div>
+                
+                <div class="form-section">
+                    <h4>Review Decision</h4>
+                    <div class="form-group">
+                        <label for="verificationNotes" class="form-label">Notes</label>
+                        <textarea id="verificationNotes" name="notes" class="form-textarea" rows="3"
+                            placeholder="Add notes about your decision..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancelVerification">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="rejectOrganization">Reject</button>
+                    <button type="button" class="btn btn-primary" id="approveOrganization">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Review Modal -->
+    <div class="modal hidden" id="emergencyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Review Emergency Request</h3>
+                <button class="modal-close" id="closeEmergencyModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="emergencyDetails">
+                    <!-- Emergency details will be populated here -->
+                </div>
+                
+                <div class="form-section">
+                    <h4>Admin Decision</h4>
+                    <div class="form-group">
+                        <label for="emergencyNotes" class="form-label">Admin Notes</label>
+                        <textarea id="emergencyNotes" name="notes" class="form-textarea" rows="3"
+                            placeholder="Add notes about your decision..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="cancelEmergencyReview">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="rejectEmergency">Reject</button>
+                    <button type="button" class="btn btn-primary" id="approveEmergency">Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-common.js"></script>
+    <script src="../../js/admin-dashboard.js"></script>
+</body>
+</html>

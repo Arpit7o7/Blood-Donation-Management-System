@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - RedConnect</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/patient-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="blood-drop">🩸</span>
+                    <span class="brand-name">RedConnect</span>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-bell" id="notificationBell">
+                        <span class="bell-icon">🔔</span>
+                        <span class="notification-count hidden" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">
+                            <span id="userInitials">P</span>
+                        </div>
+                        <div class="user-dropdown hidden" id="userDropdown">
+                            <a href="#" class="dropdown-item" id="profileLink">Profile</a>
+                            <a href="#" class="dropdown-item" id="settingsLink">Settings</a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutLink">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">Welcome, <span id="patientName">Patient</span></h1>
+                    <p class="welcome-subtitle">Request blood safely and track your medical needs with our network of verified hospitals.</p>
+                </div>
+                <div class="patient-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalRequests">0</div>
+                        <div class="stat-label">Total Requests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="activeRequests">0</div>
+                        <div class="stat-label">Active Requests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="emergencyRequests">0</div>
+                        <div class="stat-label">Emergency Requests</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-card primary-action" id="requestBloodBtn">
+                        <div class="action-icon">🩸</div>
+                        <div class="action-title">Request Blood</div>
+                        <div class="action-description">Submit new blood request</div>
+                    </button>
+                    <button class="action-card emergency-action" id="emergencyRequestBtn">
+                        <div class="action-icon">🚨</div>
+                        <div class="action-title">Emergency Request</div>
+                        <div class="action-description">Urgent blood requirement</div>
+                    </button>
+                    <button class="action-card" id="findHospitalsBtn">
+                        <div class="action-icon">🏥</div>
+                        <div class="action-title">Find Hospitals</div>
+                        <div class="action-description">Locate nearby hospitals</div>
+                    </button>
+                    <button class="action-card" id="requestHistoryBtn">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Request History</div>
+                        <div class="action-description">View past requests</div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Active Blood Requests -->
+            <section class="active-requests-section">
+                <div class="section-header">
+                    <h2 class="section-title">Active Blood Requests</h2>
+                    <button class="view-all-btn" id="viewAllRequestsBtn">View All</button>
+                </div>
+                <div class="requests-grid" id="activeRequestsGrid">
+                    <!-- Active request cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading active requests...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nearby Hospitals -->
+            <section class="nearby-hospitals-section">
+                <div class="section-header">
+                    <h2 class="section-title">Nearby Hospitals</h2>
+                    <button class="view-all-btn" id="viewAllHospitalsBtn">View All</button>
+                </div>
+                <div class="hospitals-grid" id="hospitalsGrid">
+                    <!-- Hospital cards will be loaded here -->
+                    <div class="loading-placeholder">
+                        <div class="loading-spinner"></div>
+                        <p>Loading nearby hospitals...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Blood Request Modal -->
+    <div class="modal hidden" id="bloodRequestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Request Blood</h3>
+                <button class="modal-close" id="closeRequestModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="bloodRequestForm">
+                    <div class="form-section">
+                        <h4>Blood Requirement</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="hospitalSelect" class="form-label">Select Hospital *</label>
+                                <select id="hospitalSelect" name="hospital_id" class="form-select" required>
+                                    <option value="">Choose Hospital</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bloodGroupSelect" class="form-label">Blood Group Required *</label>
+                                <select id="bloodGroupSelect" name="blood_group" class="form-select" required>
+                                    <option value="">Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="unitsNeeded" class="form-label">Units Needed *</label>
+                                <input type="number" id="unitsNeeded" name="units_needed" class="form-input" min="1" max="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="requiredBy" class="form-label">Required By *</label>
+                                <input type="datetime-local" id="requiredBy" name="required_by" class="form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="requestType" class="form-label">Request Type *</label>
+                            <select id="requestType" name="request_type" class="form-select" required>
+                                <option value="NORMAL">Normal Request</option>
+                                <option value="EMERGENCY">Emergency Request</option>
+                                <option value="DISASTER">Disaster Emergency</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section" id="emergencySection" style="display: none;">
+                        <h4>Emergency Details</h4>
+                        
+                        <div class="form-group">
+                            <label for="emergencyReason" class="form-label">Emergency Reason *</label>
+                            <input type="text" id="emergencyReason" name="emergency_reason" class="form-input" 
+                                placeholder="e.g., Surgery, Accident, Critical condition">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emergencyJustification" class="form-label">Detailed Justification *</label>
+                            <textarea id="emergencyJustification" name="emergency_justification" class="form-textarea" rows="4" 
+                                placeholder="Provide detailed justification for emergency request (minimum 50 characters)..."></textarea>
+                            <small class="form-help">Emergency requests require admin approval and detailed justification.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4>Medical Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="doctorName" class="form-label">Doctor Name</label>
+                                <input type="text" id="doctorName" name="doctor_name" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="doctorContact" class="form-label">Doctor Contact</label>
+                                <input type="tel" id="doctorContact" name="doctor_contact" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="medicalCondition" class="form-label">Medical Condition</label>
+                            <textarea id="medicalCondition" name="medical_condition" class="form-textarea" rows="3"
+                                placeholder="Describe the medical condition requiring blood transfusion..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="emergency-warning hidden" id="emergencyWarning">
+                        <div class="warning-icon">⚠️</div>
+                        <div class="warning-content">
+                            <h4>Emergency Request Notice</h4>
+                            <p>Emergency and disaster requests require admin approval before processing. Please ensure this is a genuine emergency situation.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="medicalConsent" name="medical_consent" required>
+                            <span class="checkmark"></span>
+                            I consent to the processing of my medical information for this blood request
+                        </label>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelRequest">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/dashboard-common.js"></script>
+    <script src="../../js/patient-dashboard.js"></script>
+</body>
+</html>
