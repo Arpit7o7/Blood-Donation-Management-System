@@ -299,25 +299,7 @@ python manage.py test
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open Pull Request
 
-## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
-
-## 🎯 Roadmap
-
-- [ ] SMS notifications
-- [ ] Mobile app development
-- [ ] Advanced analytics dashboard
-- [ ] Integration with hospital management systems
-- [ ] Multi-language support
-- [ ] Advanced reporting features
 
 ---
 
